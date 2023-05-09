@@ -30,8 +30,6 @@ char preencheremail(char *email){
     } while (!verificar); 
 }
 
-//CORRIGIR
-
 char preenchersexo(char *sexo){
     do{
     printf("Digite o sexo.Caso nao queira identificar, digite indiferente: ");
