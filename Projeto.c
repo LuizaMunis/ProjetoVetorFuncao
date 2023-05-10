@@ -51,7 +51,7 @@ double preencher_altura(double*altura){
         scanf("%lf",&altura);
 
     }while(altura<1 || altura>2);
-}
+} 
 
 int main() {
     int i = 0;
