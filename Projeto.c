@@ -2,6 +2,7 @@
 #include<string.h>
 #include<stdlib.h>
 #include<time.h>
+#include<math.h>
 
 int numeros_randomicos(int  *id){
     srand(time(NULL)); 
@@ -45,10 +46,11 @@ char preencher_endereco(char *endereco){
 
 //TERMINAR
 double preencher_altura(double*altura){
-do{
-    printf("Digite a altura:");
-    scanf("%ld", &altura);
-}while()
+    do{
+        printf("Digite a altura:");
+        scanf("%lf",&altura);
+
+    }while(altura<1 || altura>2);
 }
 
 int main() {
@@ -70,11 +72,13 @@ int main() {
     switch (escolha) {
         case 'i':
          printf("\nFuncao incluir selecionada.\n");
-         numeros_randomicos(*id);
-         preencher_nome(*nome);
-         preencher_email(*email);
-         preencher_sexo(*sexo);
-         preencher_endereco(*endereco);
+         //numeros_randomicos(*id);
+     //    preencher_nome(*nome);
+       //  preencher_email(*email);
+        // preencher_sexo(*sexo);
+       //  preencher_endereco(*endereco);
+         preencher_altura(altura);
+         
             break;
 
         case 'd':
