@@ -34,7 +34,7 @@ char preencher_nome(char nome[5]){
         }
     } while (!verificar); 
 
-    return preencher_email;
+    return preencher_email; 
 }
 
 char preencher_sexo(char sexo[5]){
