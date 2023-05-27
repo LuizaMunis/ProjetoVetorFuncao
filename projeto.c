@@ -6,7 +6,7 @@
 
 /////////////////////////// PRIMEIRA FUNÇÃO//////////////////////////////////////////
 
-void preencherDados(int id[],char nome[][50], char email[][50],char sexo[][11], char endereco[][50], double altura[2],int vacina[],int tamanho){
+void preencherDados(int id[],char nome[][50], char email[][50],char sexo[][11], char endereco[][50], double altura[],int vacina[],int tamanho){
  int i=0;
  char opcao[3];
  //numeros randomicos
@@ -78,7 +78,7 @@ void preencherDados(int id[],char nome[][50], char email[][50],char sexo[][11], 
 
 /////////////////////////////////////SEGUNDA FUNÇÃO//////////////////////////////////////////////////
 
-void editarCadastro(int id[],char nome[][50], char email[][50],char sexo[][11], char endereco[][50], double altura[2],int vacina[],int tamanho){
+void editarCadastro(int id[],char nome[][50], char email[][50],char sexo[][11], char endereco[][50], double altura[],int vacina[],int tamanho){
      int posicao = -1, opcao2;
      char email_busca[100], opcao3[3], opcao4[3];
 
@@ -213,17 +213,17 @@ int main() {
         printf("Quantas pessoas deseja cadastrar?");
         scanf("%d",&contador);
         fflush(stdin);
-        preencherDados(id,nome,email,sexo,endereco,altura,vacina,2);
+        preencherDados(id,nome,email,sexo,endereco,altura,vacina,1000);
  
             break;
         case 'd':
             printf("Funcao deletar selecionada.\n");
-            deletarDados(id,nome,email,sexo,endereco,altura,vacina,2);
+            deletarDados(id,nome,email,sexo,endereco,altura,vacina,1000);
             break;
 
 
         case 'e': printf("Funcao de busca selecionada.\n");
-        editarCadastro(id,nome,email,sexo,endereco,altura,vacina,2);
+        editarCadastro(id,nome,email,sexo,endereco,altura,vacina,1000);
             break;
 
         case 'm':
