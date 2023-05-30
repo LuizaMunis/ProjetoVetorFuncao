@@ -161,7 +161,7 @@ void editarCadastro(int id[],char nome[][50], char email[][50],char sexo[][11], 
 
 void deletarDados(int id[], char nome[][50], char email[][50], char sexo[][11], char endereco[][50], double altura[], int vacina[], int tamanho) {
     int excluir = tamanho;
-    int posicao = -1;
+    int posicao;
     char email_busca[100];
     
     printf("Digite o email da pessoa que deseja excluir: ");
