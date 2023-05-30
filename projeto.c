@@ -79,7 +79,7 @@ void preencherDados(int id[],char nome[][50], char email[][50],char sexo[][11], 
 /////////////////////////////////////SEGUNDA FUNÇÃO//////////////////////////////////////////////////
 
 void editarCadastro(int id[],char nome[][50], char email[][50],char sexo[][11], char endereco[][50], double altura[],int vacina[],int tamanho){
-     int posicao = -1, opcao2;
+     int posicao, opcao2;
      char email_busca[100], opcao3[3], opcao4[3];
 
     printf("Digite o email da pessoa que deseja buscar: ");
