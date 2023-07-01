@@ -6,9 +6,9 @@
 
 #define TAMANHO_STRING 50
 
-/////////////////////////struct//////////////////////////////////////////////////////////////
+/////////////////////////struct//////////////////////////////////////////////////////////
 
-struct Dados{
+typedef struct dados{
     int id;
     char nome[TAMANHO_STRING];
     char email[TAMANHO_STRING];
@@ -16,33 +16,32 @@ struct Dados{
     char endereco[TAMANHO_STRING];
     double altura;
     int vacina;
-	struct Dados *proximo;
-}*cadastro;
+    struct dados *ponteiro;
+}Dados;
+
 
 ///////////////////////////////////////////////////////////////////////////////////////
-struct Dados* inicializar(){
+Dados* inicializar(){
 	return NULL; 
 }
-//////////////////////////PRIMEIRA FUNÇÃO/////////////////////////////////////////////
+//////////////////////////PRIMEIRA FUNÇÃO//////////////////////////////////////////////
 
-struct Dados* preencherDados(struct Dados* cadastro){
-    int i =0;
-    char opcao[3];
+Dados* preencherDados(Dados* lista){
 
-	struct Dados* novo = (struct Dados*) malloc(sizeof(cadastro));
+Dados* novo = (Dados*) malloc(sizeof(Dados));
 
- do{
-    //numeros randomicos
-    srand(time(NULL));
-    novo->id = 1 + rand() % 1000;
 
-    //nome/  
-    printf("\nDigite o nome completo: ");
-    fgets(novo->nome,TAMANHO_STRING,stdin);
-    fflush(stdin);
+//NUmeros randomicos
+srand(time(NULL));
+novo->id = 1 + rand() % 1000;
 
-    // email
-    int verificar=0;
+//nome
+printf("\nDigite o nome completo: ");
+fgets(novo->nome,TAMANHO_STRING,stdin);
+fflush(stdin);
+
+// email
+int verificar=0;
     do {
       printf("Digite seu email: ");
       fgets(novo->email, TAMANHO_STRING, stdin);
@@ -57,7 +56,8 @@ struct Dados* preencherDados(struct Dados* cadastro){
       else {
         verificar = 1;
       }
-     } while (!verificar);
+      
+      } while (!verificar);
 
      // sexo
      do{
@@ -93,20 +93,18 @@ struct Dados* preencherDados(struct Dados* cadastro){
             } else {
             printf("Valor invalido. Tente novamente.\n");
             }
+
         } while (novo->vacina != 0 && novo->vacina != 1);
 
-       printf("Deseja realizar outra inclusao?");
-       gets(opcao);
-       fflush(stdin);
-       i++;
 
-    }while (strcmp(opcao, "sim")==0);
-
+        	novo->ponteiro=lista;
+	        return novo;
 }
+
 /////////////////////////////////////SEGUNDA FUNÇÃO//////////////////////////////////////////////////
 
-struct Dados* editarCadastro(struct Dados* cadastro){
-	struct Dados*auxiliar;
+Dados* editaLista(Dados* lista){
+	 Dados*auxiliar;
      int opcao2;
      char email[TAMANHO_STRING], opcao3[3], opcao4[3];
 	 int contador=0, tamanho=0;
@@ -114,11 +112,11 @@ struct Dados* editarCadastro(struct Dados* cadastro){
     printf("Digite o email da pessoa que deseja buscar: ");
     fgets(email, TAMANHO_STRING, stdin);
 
-    for(auxiliar=cadastro;auxiliar!=NULL;auxiliar=auxiliar->proximo) {
+    for(auxiliar=lista;auxiliar!=NULL;auxiliar=auxiliar->ponteiro) {
 	tamanho++;
 
-        if (auxiliar->email==email) {
-            printf("Pessoa encontrada:\n");
+        if (strcmp(auxiliar->email,email) == 0) {
+            printf("------------Pessoa encontrada-------------\n");
             printf("ID: %d\n", auxiliar->id);
             printf("Nome: %s\n", auxiliar->nome);
             printf("Email: %s\n", auxiliar->email);
@@ -189,55 +187,70 @@ struct Dados* editarCadastro(struct Dados* cadastro){
 
      	   }while (strcmp(opcao4, "sim")==0);
             }
-		}else contador++;
+	}else contador++;
   }
         if (tamanho == contador){
       	  printf("Email nao encontrado.\n");
 		  }
-       return cadastro;
+       return lista;
 }
 
-///////////////////////////////////TERCEIRA FUNÇÃO////////////////////////////////////
+//////////////////////////////////TERCEIRA FUNÇÃO////////////////////////////////////
 
-struct Dados* deletarDados(struct Dados* cadastro) {
- 
-    struct Dados* anterior;  //ponteiro que guarda a posição anterior
- 	struct Dados* auxiliar; //lista auxiliar para busca do cad
+Dados* deletarDados(Dados* lista){
+  char opcao[3];
+ 	Dados*auxiliar; //lista auxiliar para busca do cad
+  Dados*anterior;
 	char email[TAMANHO_STRING];
 
     printf("Digite o email da pessoa que deseja excluir: ");
     fgets(email,TAMANHO_STRING, stdin);
-    
-    for (anterior=NULL,auxiliar=cadastro;auxiliar!=NULL&&auxiliar->email!=email;anterior=auxiliar,auxiliar=auxiliar->proximo) {
+
+    for(auxiliar=lista;auxiliar!=NULL;auxiliar=auxiliar->ponteiro) {
+
+        if (strcmp(auxiliar->email,email) == 0) {
+        printf("------------Pessoa encontrada-------------\n");
+        printf("ID: %d\n", auxiliar->id);
+        printf("Nome: %s\n", auxiliar->nome);
+        printf("Email: %s\n", auxiliar->email);
+        printf("Sexo: %s\n", auxiliar->sexo);
+        printf("Endereco: %s\n", auxiliar->endereco);
+        printf("Altura: %.2f\n", auxiliar->altura);
+        printf("Vacina: %d\n", auxiliar->vacina);    
+             
+      printf("Excluir esse cadastro?");
+      gets(opcao);
+      fflush(stdin);
+
+    if (strcmp(opcao, "sim\n") == 0) {
+    if (anterior == NULL) {
+        lista = auxiliar->ponteiro;
+    } else {
+        anterior->ponteiro = auxiliar->ponteiro;
+    }
+
+    free(auxiliar);
+
+    printf("Pessoa excluída com sucesso!\n");
+    return lista;}
+
+      else {
+      printf("Exclusão cancelada.\n");}
 
     }
 
-		if(auxiliar==NULL){
-        printf("\nPessoa não cadastrado!");
-		return cadastro;
-	}
-
-	if(anterior==NULL){
-		cadastro=auxiliar->proximo;
-		free(auxiliar);
-	}
-	
-	else{
-		anterior->proximo=auxiliar->proximo;
-		free(auxiliar);
-	}
-
-
-    printf("Pessoa excluida com sucesso!\n");
-	return cadastro;
+   else{
+   printf("Cadastro nao localizado.");}
 }
+}
+
 
 ////////////////////////////QUARTA FUNÇÃO///////////////////////////////////////////
 
-void imprimirDados(struct Dados* cadastro){
-	struct Dados* auxiliar;
-	for(auxiliar=cadastro;auxiliar!=NULL;auxiliar=auxiliar->proximo){
-		    printf("Pessoa encontrada:\n");
+void imprimirDados(Dados* lista){
+Dados* auxiliar;
+	for(auxiliar=lista;auxiliar!=NULL;auxiliar=auxiliar->ponteiro){
+		    printf("------------------------\n");
             printf("ID: %d\n", auxiliar->id);
             printf("Nome: %s\n", auxiliar->nome);
             printf("Email: %s\n", auxiliar->email);
@@ -249,51 +262,48 @@ void imprimirDados(struct Dados* cadastro){
 	}
 }
 
+///////////////////////////////////////////main/////////////////////////////////////////
 
-//////////////////////////////////MAIN//////////////////////////////////////////////
+int main(){
+    char escolha,opcao[3];
+    Dados* lista;
 
-int main() {
-    int i = 0;
-    char escolha, opcao[3];
-
-	cadastro=inicializar();
-
+    lista= inicializar();
+    
     do {
-        printf("Qual funcao deseja realizar?\nDigite i para incluir\nDigite d para deletar.\nDigite e para buscar e editar.\nDigite m para imprimir\n");
+        printf("Qual funcao deseja realizar?\nDigite i para incluir\nDigite d para deletar.\nDigite e para buscar e editar.\nDigite m para imprimir\nDigite 0 para encerrar.\n");
         scanf(" %c", &escolha);
         fflush(stdin);
-        if (escolha != 'i' && escolha != 'e' && escolha != 'd' && escolha != 'd'&& escolha != 'm' && escolha != 'r' ) {
-            printf("Opcao invalida\n");
-        }
 
      switch (escolha) {
 
         case 'i':printf("Funcao incluir selecionada.\n");
-        cadastro= preencherDados(cadastro);
+        lista= preencherDados(lista);
         break;
 
         case 'd':
         printf("Funcao deletar selecionada.\n");
-        cadastro= deletarDados(cadastro);
+        lista=deletarDados(lista);
         break;
 
-        case 'e': printf("Funcao de busca selecionada.\n");
-        cadastro=editarCadastro(cadastro);
+        case 'e': printf("Funcao de busca e edicao selecionada.\n");
+        lista =editaLista(lista);
         break;
 
         case 'm': printf("Funcao de imprimir selecionada.\n");
-        imprimirDados(cadastro);
+        imprimirDados(lista);
         break;
 
-        default:
+        default:printf("Comando invalido");
         break;
      }
+
        printf("\nVoltar ao menu?");
        gets(opcao);
        fflush(stdin);
        
-        i++;
         
     } while ((escolha != 'i' && escolha != 'e' && escolha != 'd' && escolha != 'm') && strcmp(opcao, "sim")==0);
     
 } 
+    
