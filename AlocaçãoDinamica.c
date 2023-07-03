@@ -104,14 +104,15 @@ int verificar=0;
 /////////////////////////////////////SEGUNDA FUNÇÃO//////////////////////////////////////////////////
 
 Dados* editaLista(Dados* lista){
-	 Dados*auxiliar;
+	 Dados*auxiliar; //ponteiro para pecorrer a bença da lista
      int opcao2;
      char email[TAMANHO_STRING], opcao3[3], opcao4[3];
-	 int contador=0, tamanho=0;
+	 int contador=0, tamanho=0; //faz as contas pra caso rode a lista tuda e não ache nada
 
     printf("Digite o email da pessoa que deseja buscar: ");
     fgets(email, TAMANHO_STRING, stdin);
 
+  //ponto de partida     condição        Auxiliar recebe valor atual do ponteiro, assim que ele percorre a lista.
     for(auxiliar=lista;auxiliar!=NULL;auxiliar=auxiliar->ponteiro) {
 	tamanho++;
 
@@ -145,35 +146,39 @@ Dados* editaLista(Dados* lista){
      	   case 1:
             printf("Digite o novo nome: ");
             fgets(auxiliar->nome, TAMANHO_STRING, stdin);
-			fflush(stdin);
+	      		fflush(stdin);
              break;
 
       	   case 2: // Alterar email
             printf("Digite o novo email: ");
             fgets(auxiliar->email, TAMANHO_STRING, stdin);
-			fflush(stdin);
+		      	fflush(stdin);
             break;
 
       	  case 3: // Alterar sexo
             printf("Digite o novo sexo: ");
             fgets(auxiliar->sexo, 10, stdin);
-			fflush(stdin);
+		      	fflush(stdin);
             break;
 
       	  case 4: // Alterar endereço
             printf("Digite o novo endereço: ");
             fgets(auxiliar->endereco, TAMANHO_STRING, stdin);
-			fflush(stdin);
+			      fflush(stdin);
             break;
 
       	  case 5: // Alterar altura
             printf("Digite a nova altura: ");
             scanf("%lf", &auxiliar->altura);
+            fflush(stdin);
+
             break;
 
       	  case 6: // Alterar vacina
             printf("Digite a nova vacina (0 = não, 1 = sim): ");
             scanf("%d", &auxiliar->vacina);
+            fflush(stdin);
+
             break;
 
       	  default:
@@ -271,7 +276,7 @@ int main(){
     lista= inicializar();
     
     do {
-        printf("Qual funcao deseja realizar?\nDigite i para incluir\nDigite d para deletar.\nDigite e para buscar e editar.\nDigite m para imprimir\nDigite 0 para encerrar.\n");
+        printf("Qual funcao deseja realizar?\nDigite i para incluir\nDigite d para deletar.\nDigite e para buscar e editar.\nDigite m para imprimir\n");
         scanf(" %c", &escolha);
         fflush(stdin);
 
