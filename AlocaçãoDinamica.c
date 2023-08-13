@@ -159,7 +159,7 @@ Dados* editaLista(Dados* lista){
             printf("Digite o novo sexo: ");
             fgets(auxiliar->sexo, 10, stdin);
 		      	fflush(stdin);
-            break;
+            break; 
 
       	  case 4: // Alterar endereço
             printf("Digite o novo endereço: ");
